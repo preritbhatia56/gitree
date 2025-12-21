@@ -1,29 +1,19 @@
 # PrintStruct
 
-A Python CLI tool for printing the structure of your project in a visually easy-to-read format. Respects `.gitignore` files when present so ignored files and folders are omitted from the output.
+**PrintStruct** is a clean, lightweight Python CLI that prints a clean directory tree of your project **while respecting `.gitignore`** with optional zipping.
 
-Example usage (on windows powershell):
+The problems it solves:
 
-````
-PS C:/Users/Projects/PrintStruct> prst .
-````
-
-outputs:
-
-````
-PrintStruct
-├─ LICENSE
-├─ pyproject.toml
-├─ README.md
-├─ requirements.txt
-└─ structure.py
-````
+- sharing project structure in issues or pull requests
+- generating clean trees for documentation
+- pasting project layouts into ChatGPT / LLMs
+- creating zip files for LLMs using gitignore directions.
 
 <br>
 
-## Quick Setup 
+## Quick Start (10 seconds) 
 
-### Installation using pip:
+### Installation using pip (recommended):
 
 - Run this command in your terminal:
 
@@ -31,34 +21,6 @@ PrintStruct
 pip install printstruct
 ````
 
-### Installation (for Development purpose):
-
-- Clone the repository (main branch):
-
-````
-git clone https://github.com/ShahzaibAhmad05/PrintStruct
-````
-
-- Move your terminal to the project
-
-````
-cd PrintStruct
-````
-
-- Open `pyproject.toml`, and name the keyword you want to use in terminals to call the tool under project.scripts (default is prst):
-
-````
-[project.scripts]
-prst = "main:main"   # change prst to your preffered keyword
-````
-
-- Install the project on your system (globally) using pip:
-
-````
-pip install -r requirements.txt
-````
-
-and Done! The tool is installed as a python script on your system.
 
 ### Usage:
 
@@ -76,9 +38,49 @@ prst <directory_path>
 
 in any terminal to get the structure of the directory printed.
 
+- Example usage (on windows powershell):
+
+````
+PS C:/Users/Projects/PrintStruct> prst .
+````
+
+outputs:
+
+````
+PrintStruct
+├─ LICENSE
+├─ pyproject.toml
+├─ README.md
+├─ requirements.txt
+└─ structure.py
+````
+
 ### For Updates:
 
-To update the tool simply follow the installation process again, but with the latest release version. Pip will automatically handle old version removal.
+To update the tool simply reinstall it with pip, but with the latest release version. Pip will automatically handle old version removal.
+
+
+### Installation (for Contributors):
+
+- Clone the repository (main branch):
+
+````
+git clone https://github.com/ShahzaibAhmad05/PrintStruct
+````
+
+- Move your terminal to the project
+
+````
+cd PrintStruct
+````
+
+- Install the project on your system (globally) using pip:
+
+````
+pip install -r requirements.txt
+````
+
+and Done! The tool is installed as a python script on your system.
 
 <br>
 
