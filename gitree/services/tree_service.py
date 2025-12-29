@@ -4,8 +4,9 @@ from ..utilities.gitignore import GitIgnoreMatcher
 from .list_enteries import list_entries
 from ..utilities.logger import Logger, OutputBuffer
 from ..utilities.utils import copy_to_clipboard
-from ..constants.constant import (BRANCH, LAST, SPACE, VERT, 
-                                  FILE_EMOJI, EMPTY_DIR_EMOJI, 
+from ..utilities.colors import colorize_text
+from ..constants.constant import (BRANCH, LAST, SPACE, VERT,
+                                  FILE_EMOJI, EMPTY_DIR_EMOJI,
                                   NORMAL_DIR_EMOJI)
 import pathspec
 from collections import defaultdict
@@ -27,6 +28,7 @@ def draw_tree(
     exclude_depth: Optional[int] = None,
     no_files: bool = False,
     emoji: bool = False,
+    no_color: bool = False,
     whitelist: Optional[Set[str]] = None,
     include_patterns: List[str] = None,
     include_file_types: List[str] = None,
@@ -49,6 +51,7 @@ def draw_tree(
         exclude_depth (Optional[int]): Depth limit for exclude patterns
         no_files (bool): If True, only show directories
         emoji (bool): If True, show emoji icons in output
+        no_color (bool): If True, disable colorized output
         whitelist (Optional[Set[str]]): Set of file paths to exclusively include
         include_patterns (List[str]): Patterns for files to include
         include_file_types (List[str]): File types (extensions) to include
@@ -136,8 +139,17 @@ def draw_tree(
             is_last = i == len(entries) - 1 and truncated == 0
             connector = LAST if is_last else BRANCH
             suffix = "/" if entry.is_dir() else ""
+
+            # Determine if item is hidden (starts with .)
+            is_hidden = entry.name.startswith(".")
+
+            # Apply color to entry name if colors are enabled
+            entry_name = entry.name + suffix
+            if not no_color:
+                entry_name = colorize_text(entry_name, is_directory=entry.is_dir(), is_hidden=is_hidden)
+
             if not emoji:
-                output_buffer.write(prefix + connector + entry.name + suffix)
+                output_buffer.write(prefix + connector + entry_name)
             else:
                 if entry.is_file():
                     emoji_str = FILE_EMOJI
@@ -281,6 +293,7 @@ def run_tree_mode(
             exclude_depth=args.exclude_depth,
             no_files=args.no_files,
             emoji=args.emoji,
+            no_color=args.no_color,
             whitelist=selected_files,
             include_patterns=args.include,
             include_file_types=args.include_file_types,
